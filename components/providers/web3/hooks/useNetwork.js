@@ -19,16 +19,16 @@ export const handler = (web3, provider) => () => {
     web3 ? "web3/network" : null,
     async () => {
       const chainId = await web3.eth.getChainId()
+      if (!chainId) { throw new Error("Cannot retrieve account, refresh page.") }
       return NETWORKS[chainId]
     }
   )
 
   useEffect(() => {
-    provider &&
-    provider.on("chainChanged", chainId => {
-      mutate(NETWORKS[parseInt(chainId, 16)])
-    })
-  }, [web3])
+    const mutator = chainId => mutate(NETWORKS[parseInt(chainId, 16)])
+    provider?.on("chainChanged", mutator)
+    return () => provider?.removeListener("chainChanged", mutator)
+  }, [mutate]) // [provider, mutate]
 
   return {
     data,

@@ -34,7 +34,6 @@ export default function Marketplace({courses}) {
         hexCourseId,
         proof
       ).send({from: account.data, value})
-      console.log(result)
     } catch {
       console.error("Purchase course: Operation has failed.")
     }
