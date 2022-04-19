@@ -40,7 +40,7 @@ export const useAccount = () => {
   }
 }
 
-export const useAdmin = ({redirectTo}) => {
+export const useAdmin = ({ redirectTo }) => {
   const { account } = useAccount()
   const { requireInstall } = useWeb3()
   const router = useRouter()
@@ -53,7 +53,7 @@ export const useAdmin = ({redirectTo}) => {
 
       router.push(redirectTo)
     }
-  }, [account])
+  }, [account, router, requireInstall, redirectTo])
 
   return { account }
 }
