@@ -6,7 +6,7 @@ import { Button, Message } from "@components/ui/common";
 import { CourseFilter, ManagedCourseCard } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const VerificationInput = ({ onVerify }) => {
   const [email, setEmail] = useState("")
@@ -34,7 +34,7 @@ const VerificationInput = ({ onVerify }) => {
 
 export default function ManagedCourses() {
   const [proofedOwnership, setProofedOwnership] = useState({})
-  const { web3 } = useWeb3()
+  const { web3, contract } = useWeb3()
   const { account } = useAdmin({ redirectTo: "/marketplace" })
   const { managedCourses } = useManagedCourses(account)
 
@@ -54,6 +54,18 @@ export default function ManagedCourses() {
         ...proofedOwnership,
         [hash]: false
       })
+  }
+
+  const activateCourse = async courseHash => {
+    try {
+      await contract.methods
+        .activateCourse(courseHash)
+        .send({
+          from: account.data
+        })
+    } catch (e) {
+      console.error(e.message)
+    }
   }
 
   if (!account.isAdmin) {
@@ -87,6 +99,18 @@ export default function ManagedCourses() {
               <Message type="danger">
                 Wrong Proof!
               </Message>
+            }
+            {course.state === "purchased" &&
+              <div className="mt-2">
+                <Button
+                  onClick={() => activateCourse(course.hash)}
+                  variant="green">
+                  Activate
+                </Button>
+                <Button variant="red">
+                  Deactivate
+                </Button>
+              </div>
             }
           </ManagedCourseCard>
         )}
