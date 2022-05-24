@@ -40,7 +40,7 @@ export const useAccount = () => {
   }
 }
 
-export const useAdmin = ({ redirectTo }) => {
+export const useAdmin = ({redirectTo}) => {
   const { account } = useAccount()
   const { requireInstall } = useWeb3()
   const router = useRouter()
@@ -53,7 +53,7 @@ export const useAdmin = ({ redirectTo }) => {
 
       router.push(redirectTo)
     }
-  }, [account, router, requireInstall, redirectTo])
+  }, [account])
 
   return { account }
 }
@@ -86,9 +86,14 @@ export const useWalletInfo = () => {
   const { account } = useAccount()
   const { network } = useNetwork()
 
+  const isConnecting =
+   !account.hasInitialResponse &&
+   !network.hasInitialResponse
+
   return {
     account,
     network,
-    canPurchaseCourse: !!(account.data && network.isSupported)
+    isConnecting,
+    hasConnectedWallet: !!(account.data && network.isSupported)
   }
 }

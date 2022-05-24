@@ -1,14 +1,16 @@
-import { useAccount, useOwnedCourses } from "@components/hooks/web3";
-import { useWeb3 } from "@components/providers";
-import { Button, Message } from "@components/ui/common";
-import { OwnedCourseCard } from "@components/ui/course";
-import { BaseLayout } from "@components/ui/layout";
-import { MarketHeader } from "@components/ui/marketplace";
-import { getAllCourses } from "@content/courses/fetcher";
-import Link from "next/link";
-import { useRouter } from "next/router";
 
-export default function OwnedCourses({ courses }) {
+
+import { useAccount, useOwnedCourses } from "@components/hooks/web3"
+import { Button, Message } from "@components/ui/common"
+import { OwnedCourseCard } from "@components/ui/course"
+import { BaseLayout } from "@components/ui/layout"
+import { MarketHeader } from "@components/ui/marketplace"
+import { getAllCourses } from "@content/courses/fetcher"
+import { useRouter } from "next/router"
+import Link from "next/link"
+import { useWeb3 } from "@components/providers"
+
+export default function OwnedCourses({courses}) {
   const router = useRouter()
   const { requireInstall } = useWeb3()
   const { account } = useAccount()
@@ -18,34 +20,37 @@ export default function OwnedCourses({ courses }) {
     <>
       <MarketHeader />
       <section className="grid grid-cols-1">
-        {ownedCourses.isEmpty &&
-          <Message type="warning">
-            <div>You do not own any courses</div>
-            <Link href="/marketplace">
-              <a className="font-normal hover:underline">
-                <i>Purchase Course</i>
-              </a>
-            </Link>
-          </Message>
+        { ownedCourses.isEmpty &&
+          <div className="w-1/2">
+            <Message type="warning">
+              <div>You don&apos;t own any courses</div>
+              <Link href="/marketplace">
+                <a className="font-normal hover:underline">
+                  <i>Purchase Course</i>
+                </a>
+              </Link>
+            </Message>
+          </div>
         }
-        {account.isEmpty &&
-          <Message type="warning">
-            <div>Connect to Metamask</div>
-          </Message>
+        { account.isEmpty &&
+          <div className="w-1/2">
+            <Message type="warning">
+              <div>Please connect to Metamask</div>
+            </Message>
+          </div>
         }
-        {requireInstall &&
-          <Message type="warning">
-            <div>Install Metamask</div>
-          </Message>
+        { requireInstall &&
+          <div className="w-1/2">
+            <Message type="warning">
+              <div>Please install Metamask</div>
+            </Message>
+          </div>
         }
-        {ownedCourses.data?.map(course =>
+        { ownedCourses.data?.map(course =>
           <OwnedCourseCard
             key={course.id}
             course={course}
           >
-            {/* <Message>
-              My custom message!
-            </Message> */}
             <Button
               onClick={() => router.push(`/courses/${course.slug}`)}
             >

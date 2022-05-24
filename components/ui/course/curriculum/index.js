@@ -1,6 +1,6 @@
+
 import { Loader } from "@components/ui/common"
 import Link from "next/link"
-
 
 const lectures = [
   "How to init App",
@@ -11,7 +11,7 @@ const lectures = [
   "Safe operator",
 ]
 
-export default function Curriculum({ locked, courseState, isLoading }) {
+export default function Curriculum({locked, courseState, isLoading}) {
 
   const statusClass = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
   return (
@@ -35,7 +35,7 @@ export default function Curriculum({ locked, courseState, isLoading }) {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {lectures.map(lec =>
+                  { lectures.map(lec =>
                     <tr key={lec}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -50,36 +50,39 @@ export default function Curriculum({ locked, courseState, isLoading }) {
                         <span
                           className={
                             locked ?
-                              `bg-red-100 text-red-800 ${statusClass}` :
-                              `bg-green-100 text-green-800 ${statusClass}`
+                             `bg-red-100 text-red-800 ${statusClass}` :
+                             `bg-green-100 text-green-800 ${statusClass}`
                           }
                         >
-                          {locked ? "Locked" : "Unlocked"}
+                          { locked ? "Locked" : "Unlocked" }
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        {isLoading ?
+                        {
+                          isLoading ?
                           <Loader /> :
                           locked ?
                             <>
-                              {courseState === "deactivated" &&
+                              { courseState === "deactivated" &&
                                 <Link href="/marketplace">
-                                  <a className="text-indigo-600 hover:text-indigo-900">
+                                  <a
+                                    className="text-indigo-600 hover:text-indigo-900">
                                     Get Access
                                   </a>
                                 </Link>
                               }
-                              {courseState === "purchased" &&
+                              { courseState === "purchased" &&
                                 <Link href="/faq">
-                                  <a className="text-yellow-600 hover:text-yellow-900">
-                                    Waiting for activation ...
+                                  <a
+                                    className="text-yellow-500 hover:text-yellow-900">
+                                    Waiting for activation...
                                   </a>
                                 </Link>
                               }
-                            </>
-                            :
+                            </> :
                             <Link href="/watch">
-                              <a className="text-indigo-600 hover:text-indigo-900">
+                              <a
+                                className="text-indigo-600 hover:text-indigo-900">
                                 Watch
                               </a>
                             </Link>

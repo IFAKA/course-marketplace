@@ -11,6 +11,8 @@ const useCounter = () => {
     }, 1000)
   }, [])
 
+  // console.log("Calling useCounter!")
+
   return count
 }
 

@@ -9,13 +9,15 @@ import {
 import { BaseLayout } from "@components/ui/layout";
 import { getAllCourses } from "@content/courses/fetcher";
 
-export default function Course({ course }) {
-
+export default function Course({course}) {
   const { isLoading } = useWeb3()
   const { account } = useAccount()
   const { ownedCourse } = useOwnedCourse(course, account.data)
   const courseState = ownedCourse.data?.state
-  const isLocked = !courseState ||
+  // const courseState = "deactivated"
+
+  const isLocked =
+    !courseState ||
     courseState === "purchased" ||
     courseState === "deactivated"
 
@@ -32,31 +34,25 @@ export default function Course({ course }) {
       <Keypoints
         points={course.wsl}
       />
-      {
-        courseState &&
+      { courseState &&
         <div className="max-w-5xl mx-auto">
-          {courseState === "purchased" &&
-            <div className="max-w-5xl mx-auto">
-              <Message type="warning">
-                Course is purchased and waiting for the activation. It can take up to 24h.
-                <i className="block font-normal">In case of questions, contact us to eincode@gmail.com</i>
-              </Message>
-            </div>
+          { courseState === "purchased" &&
+            <Message type="warning">
+              Course is purchased and waiting for the activation. Process can take up to 24 hours.
+              <i className="block font-normal">In case of any questions, please contact info@eincode.com</i>
+            </Message>
           }
-          {courseState === "activated" &&
-            <div className="max-w-5xl mx-auto">
-              <Message type="success">
-                Course is ready, lets do it.
-              </Message>
-            </div>
+          { courseState === "activated" &&
+            <Message type="success">
+              Eincode wishes you happy watching of the course.
+            </Message>
           }
-          {courseState === "deactivated" &&
-            <div className="max-w-5xl mx-auto">
-              <Message type="danger">
-                Course has been deactivated.
-                <i className="block font-normal">Contact us to eincode@gmail.com</i>
-              </Message>
-            </div>
+          { courseState === "deactivated" &&
+            <Message type="danger">
+              Course has been deactivated, due the incorrect purchase data.
+              The functionality to watch the course has been temporaly disabled.
+              <i className="block font-normal">Please contact info@eincode.com</i>
+            </Message>
           }
         </div>
       }
@@ -84,7 +80,7 @@ export function getStaticPaths() {
 }
 
 
-export function getStaticProps({ params }) {
+export function getStaticProps({params}) {
   const { data } = getAllCourses()
   const course = data.filter(c => c.slug === params.slug)[0]
 
