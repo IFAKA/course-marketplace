@@ -19,13 +19,32 @@ module.exports = {
           addressIndex: 0,
         }),
       network_id: 3,
-      gas: 5500000, // Gas limit. how much gas we are willing to spend. 
-      // To know how much gas you should spend, copy contract, 
-      // deploy it in remix and check the gas used and double the value. 
-      gasPrice: 20000000000, // how much gas we are willing to spend for unit of gas
+      gas: 2500000, // Gas limit. how much gas we are willing to spend.
+      // To know how much gas you should spend, copy contract,
+      // deploy it in remix and check the gas used and double the value.
+      gasPrice: 41000000000, // how much gas we are willing to spend for unit of gas
       confirmations: 2, //Number of blocks between deployment
       timeoutBlocks: 200, // Number of blocks before deployment times out
     },
+    // live: {
+    //   provider: () =>
+    //     new HDWalletProvider({
+    //       mnemonic: {
+    //         phrase: keys.MNEMONIC,
+    //       },
+    //       providerOrUrl: `https://mainnet.infura.io/v3/${keys.INFURA_PROJECT_ID}`,
+    //       addressIndex: 0,
+    //     }),
+    //   network_id: 1,
+    //   gas: 5500000, // Gas limit. how much gas we are willing to spend.
+    //   // To know how much gas you should spend, copy contract,
+    //   // deploy it in remix and check the gas used and double the value.
+    //   gasPrice: 20000000000, // how much gas we are willing to spend for unit of gas.
+    //   // You can also check etherscan and put a higher value than you see.
+    //   confirmations: 2, //Number of blocks between deployment
+    //   timeoutBlocks: 200, // Number of blocks before deployment times out,
+    //   skipDryRun: true,
+    // },
   },
   compilers: {
     solc: {
@@ -53,9 +72,3 @@ module.exports = {
 
 // REST TO MINER => TIP * GAS USED
 //                   2  * 21000
-
-// NEXT_PUBLIC_TARGET_CHAIN_ID=1337
-// NEXT_PUBLIC_NETWORK_ID=5777
-
-  // NEXT_PUBLIC_TARGET_CHAIN_ID=1
-  // NEXT_PUBLIC_NETWORK_ID=1

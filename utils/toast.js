@@ -26,12 +26,10 @@ export const withToast = (txPromise) => {
           </div>
         );
       },
-      // other options
       icon: "🟢",
     },
     error: {
       render({ data }) {
-        // When the promise reject, data will contains the error
         return <div>{data.message ?? "Transaction has failed"}</div>;
       },
     },
